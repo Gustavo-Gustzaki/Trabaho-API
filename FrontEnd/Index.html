@@ -4,67 +4,310 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Library</title>
+    <title>GameShelf | Cadastro de Jogos</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
 
-    <header>
-        <h1>🎮 Game Library</h1>
-        <p>Gerencie sua coleção de jogos</p>
-    </header>
+<header class="header">
+    <div class="logo">
+        <div class="logo-icon">G</div>
+        <div>
+            <h1>GameShelf</h1>
+            <span>Sua coleção de jogos</span>
+        </div>
+    </div>
 
-    <main>
-        <section class="form-section">
-            <h2 id="form-title">Cadastrar jogo</h2>
+    <div class="header-status">
+        <span class="status-dot"></span>
+        <span id="apiStatus">API desconectada</span>
+    </div>
+</header>
 
-            <form id="game-form">
-                <input type="hidden" id="game-id">
+<main class="container">
 
-                <label for="title">Nome do jogo</label>
-                <input type="text" id="title" required>
+    <!-- CONEXÃO API -->
+    <section class="panel api-panel">
+        <div class="section-heading">
+            <div>
+                <span class="overline">CONEXÃO</span>
+                <h2>Configure sua API</h2>
+            </div>
+            <span class="tag">CRUDCRUD</span>
+        </div>
 
-                <label for="genre">Gênero</label>
-                <input type="text" id="genre" required>
+        <label for="apiUrl">Endpoint do CrudCrud</label>
 
-                <label for="platform">Plataforma</label>
-                <select id="platform" required>
-                    <option value="">Selecione</option>
-                    <option value="PC">PC</option>
-                    <option value="PlayStation">PlayStation</option>
-                    <option value="Xbox">Xbox</option>
-                    <option value="Nintendo Switch">Nintendo Switch</option>
-                </select>
+        <div class="api-input-group">
+            <input type="url" id="apiUrl"
+                placeholder="https://crudcrud.com/api/SEU_CODIGO">
 
-                <label for="status">Status</label>
-                <select id="status" required>
-                    <option value="WISHLIST">Quero jogar</option>
-                    <option value="PLAYING">Jogando</option>
-                    <option value="COMPLETED">Zerado</option>
-                </select>
+            <button class="btn btn-primary" id="connectBtn">
+                Conectar API
+            </button>
+        </div>
 
-                <label for="rating">Nota (0 a 10)</label>
-                <input type="number" id="rating" min="0" max="10" step="0.5">
+        <p class="help-text">
+            Cole seu endpoint do CrudCrud sem adicionar /games.
+        </p>
+    </section>
 
-                <button type="submit" id="submit-btn">
-                    Cadastrar jogo
-                </button>
+    <!-- ESTATÍSTICAS -->
+    <section class="stats">
+        <div class="stat-card">
+            <span>Total de jogos</span>
+            <strong id="totalGames">0</strong>
+        </div>
 
-                <button type="button" id="cancel-btn" hidden>
-                    Cancelar edição
-                </button>
+        <div class="stat-card">
+            <span>Jogando</span>
+            <strong id="playingGames">0</strong>
+        </div>
+
+        <div class="stat-card">
+            <span>Concluídos</span>
+            <strong id="completedGames">0</strong>
+        </div>
+
+        <div class="stat-card">
+            <span>Quero jogar</span>
+            <strong id="plannedGames">0</strong>
+        </div>
+    </section>
+
+    <div class="main-grid">
+
+        <!-- CADASTRO -->
+        <section class="panel editor-panel">
+
+            <div class="section-heading">
+                <div>
+                    <span class="overline">GERENCIAMENTO</span>
+                    <h2 id="editorTitle">Cadastrar jogo</h2>
+                </div>
+
+                <span class="tag" id="formMethod">POST</span>
+            </div>
+
+            <form id="gameForm">
+
+                <input type="hidden" id="gameId">
+
+                <div class="form-grid">
+
+                    <div class="field full">
+                        <label for="titulo">Nome do jogo *</label>
+                        <input type="text" id="titulo"
+                            placeholder="Ex: Red Dead Redemption 2"
+                            maxlength="100" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="plataforma">Plataforma</label>
+                        <select id="plataforma">
+                            <option value="">Selecione</option>
+                            <option>PC</option>
+                            <option>PlayStation 5</option>
+                            <option>PlayStation 4</option>
+                            <option>Xbox Series X/S</option>
+                            <option>Xbox One</option>
+                            <option>Nintendo Switch</option>
+                            <option>Mobile</option>
+                            <option>Outra</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="genero">Gênero</label>
+                        <select id="genero">
+                            <option value="">Selecione</option>
+                            <option>Ação</option>
+                            <option>Aventura</option>
+                            <option>RPG</option>
+                            <option>FPS</option>
+                            <option>Estratégia</option>
+                            <option>Corrida</option>
+                            <option>Esporte</option>
+                            <option>Terror</option>
+                            <option>Simulação</option>
+                            <option>Plataforma</option>
+                            <option>Outro</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="ano">Ano de lançamento</label>
+                        <input type="number" id="ano"
+                            placeholder="2026" min="1950" max="2100">
+                    </div>
+
+                    <div class="field">
+                        <label for="nota">Nota (0 a 10)</label>
+                        <input type="number" id="nota"
+                            placeholder="9.5" min="0" max="10" step="0.1">
+                    </div>
+
+                    <div class="field full">
+                        <label for="situacao">Situação</label>
+                        <select id="situacao">
+                            <option value="Quero jogar">Quero jogar</option>
+                            <option value="Jogando">Jogando</option>
+                            <option value="Concluído">Concluído</option>
+                            <option value="Pausado">Pausado</option>
+                        </select>
+                    </div>
+
+                    <div class="field full">
+                        <label for="capa">URL da capa</label>
+                        <input type="url" id="capa"
+                            placeholder="https://exemplo.com/capa.jpg">
+                    </div>
+
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" id="saveBtn">
+                        POST — Cadastrar jogo
+                    </button>
+
+                    <button type="button" class="btn btn-secondary"
+                        id="cancelBtn" hidden>
+                        Cancelar
+                    </button>
+                </div>
+
+                <p id="formMessage" class="form-message" role="status"></p>
+
             </form>
         </section>
 
-        <section class="library-section">
-            <h2>Minha biblioteca</h2>
+        <!-- BIBLIOTECA -->
+        <section class="panel library-panel">
 
-            <div id="games-list">
-                <p>Carregando jogos...</p>
+            <div class="section-heading">
+                <div>
+                    <span class="overline">SUA COLEÇÃO</span>
+                    <h2>Biblioteca de jogos</h2>
+                </div>
+
+                <button class="btn btn-secondary" id="refreshBtn">
+                    ↻ Atualizar
+                </button>
             </div>
-        </section>
-    </main>
 
-    <script src="script.js"></script>
+            <div class="filters">
+                <input type="search" id="searchInput"
+                    placeholder="Pesquisar jogo...">
+
+                <select id="filterStatus">
+                    <option value="">Todas as situações</option>
+                    <option value="Quero jogar">Quero jogar</option>
+                    <option value="Jogando">Jogando</option>
+                    <option value="Concluído">Concluído</option>
+                    <option value="Pausado">Pausado</option>
+                </select>
+            </div>
+
+            <div id="gamesList" class="games-grid">
+                <div class="empty-state">
+                    <span>🎮</span>
+                    <h3>Nenhum jogo encontrado</h3>
+                    <p>Conecte sua API para carregar sua biblioteca.</p>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+    <!-- CONSULTA GET POR ID -->
+    <section class="panel request-panel">
+
+        <div class="section-heading">
+            <div>
+                <span class="overline">CONSULTA INDIVIDUAL</span>
+                <h2>GET por ID</h2>
+            </div>
+
+            <span class="method-badge get">GET</span>
+        </div>
+
+        <div class="api-input-group">
+            <input type="text" id="lookupId"
+                placeholder="Digite o ID do jogo">
+
+            <button class="btn btn-primary" id="getOneBtn">
+                Consultar jogo
+            </button>
+        </div>
+
+        <pre id="singleResult">Nenhuma consulta realizada.</pre>
+
+    </section>
+
+    <!-- JANELA GET -->
+    <div class="game-modal" id="gameModal" hidden>
+
+        <div class="modal-background" id="modalBackground"></div>
+
+        <div class="modal-content">
+
+            <button class="modal-close" id="closeGameModal"
+                aria-label="Fechar">&times;</button>
+
+            <span class="overline">CONSULTA GET</span>
+
+            <h2 id="modalGameTitle">Informações do jogo</h2>
+
+            <div id="gameDetails"></div>
+
+            <button class="btn btn-secondary modal-footer-button"
+                id="modalCloseButton">
+                Fechar
+            </button>
+
+        </div>
+    </div>
+
+    <!-- CONSOLE HTTP -->
+    <section class="panel console-panel">
+
+        <div class="section-heading">
+            <div>
+                <span class="overline">DESENVOLVIMENTO</span>
+                <h2>Console HTTP</h2>
+            </div>
+
+            <button class="btn btn-secondary" id="clearConsoleBtn">
+                Limpar console
+            </button>
+        </div>
+
+        <div class="methods">
+            <span class="method-badge get">GET</span>
+            <span class="method-badge post">POST</span>
+            <span class="method-badge put">PUT</span>
+            <span class="method-badge patch">PATCH*</span>
+            <span class="method-badge delete">DELETE</span>
+        </div>
+
+        <p class="help-text">
+            * PATCH utiliza GET + PUT para modificar somente os campos escolhidos.
+        </p>
+
+        <div id="consoleHistory" class="console-history">
+            <div class="empty-console">
+                Aguardando requisições HTTP...
+            </div>
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    GameShelf © 2026 — HTML, CSS, JavaScript e CrudCrud API.
+</footer>
+
 </body>
 </html>
