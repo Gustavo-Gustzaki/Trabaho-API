@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Library</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>🎮 Game Library</h1>
+        <p>Gerencie sua coleção de jogos</p>
+    </header>
+
+    <main>
+        <section class="form-section">
+            <h2 id="form-title">Cadastrar jogo</h2>
+
+            <form id="game-form">
+                <input type="hidden" id="game-id">
+
+                <label for="title">Nome do jogo</label>
+                <input type="text" id="title" required>
+
+                <label for="genre">Gênero</label>
+                <input type="text" id="genre" required>
+
+                <label for="platform">Plataforma</label>
+                <select id="platform" required>
+                    <option value="">Selecione</option>
+                    <option value="PC">PC</option>
+                    <option value="PlayStation">PlayStation</option>
+                    <option value="Xbox">Xbox</option>
+                    <option value="Nintendo Switch">Nintendo Switch</option>
+                </select>
+
+                <label for="status">Status</label>
+                <select id="status" required>
+                    <option value="WISHLIST">Quero jogar</option>
+                    <option value="PLAYING">Jogando</option>
+                    <option value="COMPLETED">Zerado</option>
+                </select>
+
+                <label for="rating">Nota (0 a 10)</label>
+                <input type="number" id="rating" min="0" max="10" step="0.5">
+
+                <button type="submit" id="submit-btn">
+                    Cadastrar jogo
+                </button>
+
+                <button type="button" id="cancel-btn" hidden>
+                    Cancelar edição
+                </button>
+            </form>
+        </section>
+
+        <section class="library-section">
+            <h2>Minha biblioteca</h2>
+
+            <div id="games-list">
+                <p>Carregando jogos...</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

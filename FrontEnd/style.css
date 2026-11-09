@@ -1,0 +1,121 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #111827;
+    color: #f9fafb;
+    padding: 30px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+header h1 {
+    color: #8b5cf6;
+    font-size: 32px;
+}
+
+header p {
+    color: #9ca3af;
+    margin-top: 8px;
+}
+
+main {
+    max-width: 900px;
+    margin: auto;
+}
+
+.form-section,
+.library-section {
+    background: #1f2937;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #c4b5fd;
+}
+
+form {
+    display: grid;
+    gap: 12px;
+}
+
+label {
+    color: #d1d5db;
+}
+
+input, select {
+    padding: 12px;
+    border: 1px solid #374151;
+    border-radius: 6px;
+    background: #111827;
+    color: white;
+}
+
+button {
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    background: #7c3aed;
+    color: white;
+}
+
+button:hover {
+    background: #6d28d9;
+}
+
+#cancel-btn {
+    background: #4b5563;
+}
+
+.game-card {
+    background: #111827;
+    border: 1px solid #374151;
+    padding: 18px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.game-card h3 {
+    color: #a78bfa;
+    margin-bottom: 10px;
+}
+
+.game-card p {
+    margin: 6px 0;
+    color: #d1d5db;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.edit-btn {
+    background: #2563eb;
+}
+
+.delete-btn {
+    background: #dc2626;
+}
+
+.actions button {
+    flex: 1;
+}
+
+[hidden] {
+    display: none !important;
+}
